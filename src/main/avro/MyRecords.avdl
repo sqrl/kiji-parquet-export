@@ -1,0 +1,13 @@
+@namespace("org.kiji.parquet")
+/** Example avro protocol. */
+protocol MyRecords {
+  record IdField {
+    string id;
+    int num;
+  }
+  /** Example record. */
+  record ExampleRecord {
+    IdField idField;
+    array<long> timestamps;
+  }
+}
