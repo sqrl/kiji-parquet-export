@@ -14,8 +14,7 @@ import org.kiji.schema.testutil.AbstractKijiIntegrationTest;
 /**
  * Created by sqrl on 12/18/13.
  */
-public class TestBasicTableSchemaConvert extends KijiClientTest {
-
+public class TestBasicTableSchemaConvert extends AbstractKijiIntegrationTest {
   @Test
   public void testSimpleConverter() throws Exception {
     KijiTableLayout layout =
