@@ -1,4 +1,4 @@
-package org.kiji.parquet;
+package org.kiji.parquet.mapreduce;
 
 import org.apache.hadoop.util.ToolRunner;
 import org.junit.Test;

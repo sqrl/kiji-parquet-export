@@ -24,6 +24,7 @@ import parquet.avro.AvroParquetOutputFormat;
 import org.kiji.mapreduce.KijiMapReduceJob;
 import org.kiji.mapreduce.framework.KijiConfKeys;
 import org.kiji.mapreduce.framework.KijiTableInputFormat;
+import org.kiji.parquet.TableSchemaConverter;
 import org.kiji.schema.*;
 import org.kiji.schema.layout.KijiTableLayout;
 
