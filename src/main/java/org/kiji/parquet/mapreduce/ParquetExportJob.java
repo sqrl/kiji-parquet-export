@@ -1,4 +1,4 @@
-package org.kiji.parquet;
+package org.kiji.parquet.mapreduce;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
