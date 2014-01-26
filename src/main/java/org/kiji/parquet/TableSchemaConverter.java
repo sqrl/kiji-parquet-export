@@ -47,13 +47,13 @@ public class TableSchemaConverter {
       if (fam.isMapType()) {
         Schema mapSchema = getSchemaFromCellSchema(fam.getDesc().getMapSchema());
         fieldsBuilder =
-            fieldsBuilder.name(fam.getName()).type().nullable().map().values(mapSchema).noDefault();
+            fieldsBuilder.name(fam.getName()).type().optional().map().values(mapSchema);
       } else {
         assert(fam.isGroupType());
         for (KijiTableLayout.LocalityGroupLayout.FamilyLayout.ColumnLayout col : fam.getColumns()) {
-          String fieldName = String.format("%s_%s", fam.getName(), col.getName());
+          String fieldName = fieldForColumn(fam.getName(), col.getName());
           Schema type = getSchemaFromCellSchema(col.getDesc().getColumnSchema());
-          fieldsBuilder = fieldsBuilder.name(fieldName).type(type).noDefault();
+          fieldsBuilder = fieldsBuilder.name(fieldName).type().optional().type(type);
         }
       }
     }
@@ -63,7 +63,8 @@ public class TableSchemaConverter {
   /**
    * Retrieves the relevant Schema from a CellSchema by either parsing it from the relevant String,
    * or retrieving it from the passed in SchemaTable.
-   * TODO: This does not currently support Avro records that refer to their default reader by id.
+   * TODO: This does not currently support Avro records that refer to their default reader by id as
+   * this requires the schema table.
    *
    * @param cellSchema that defines the desired Schema.
    * @return Schema referenced by the CellSchema.
@@ -95,5 +96,16 @@ public class TableSchemaConverter {
         throw new UnsupportedOperationException(
             "CellSchema " + cellSchema.getType() + " unsupported.");
     }
+  }
+
+  /**
+   * Maps a kiji column name to a field name in our output schema.
+   *
+   * @param family the family name.
+   * @param qualifier the qualifier name.
+   * @return The field used to hold a version of this cell in the parquet avro record.
+   */
+  public static String fieldForColumn(String family, String qualifier) {
+    return String.format("%s_%s", family, qualifier);
   }
 }
